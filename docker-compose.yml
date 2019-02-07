@@ -1,0 +1,38 @@
+version: '2.1'
+
+services:
+  build-env:
+    build:
+      context: .
+      dockerfile: Dockerfile.service-builder
+    image: envoy-service-builder
+
+  service-a:
+    build:
+      context: service-a
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    depends_on:
+      - build-env
+    networks:
+      envoymesh:
+        aliases:
+          - service-a
+
+  service-b:
+    build:
+      context: service-b
+    ports:
+      - "8081:8080"
+    expose:
+      - "8080"
+    depends_on:
+      - build-env
+    networks:
+      envoymesh:
+        aliases:
+          - service-b
+networks:
+  envoymesh: {}

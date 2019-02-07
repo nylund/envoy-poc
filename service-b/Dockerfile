@@ -1,12 +1,6 @@
-FROM openjdk:8-jdk-alpine as builder
+FROM envoy-service-builder as builder
 
 WORKDIR /build
-
-# Maven cache
-COPY pom.xml mvnw ./
-COPY .mvn/ ./.mvn/
-RUN ./mvnw -B dependency:resolve-plugins dependency:resolve
-
 COPY . .
 RUN ./mvnw package
 
