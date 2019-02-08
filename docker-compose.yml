@@ -12,8 +12,11 @@ services:
       context: service-a
     ports:
       - "8080:8080"
+      - "9090:9090"
+      - "8001:8001"
     expose:
       - "8080"
+      - "9090"
     depends_on:
       - build-env
     networks:

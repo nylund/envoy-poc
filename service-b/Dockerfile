@@ -1,7 +1,8 @@
 FROM envoy-service-builder as builder
 
 WORKDIR /build
-COPY . .
+COPY ./src src/
+COPY ./pom.xml pom.xml
 RUN ./mvnw package
 
 FROM openjdk:8-jre-alpine

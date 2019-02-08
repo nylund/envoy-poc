@@ -23,5 +23,15 @@ public class Controller {
         return "Service A called B and got response: " + response.getBody();
     }
 
+    @GetMapping("/call-b-with-envoy")
+    public String callBWithEnvoy() {
+
+        RestTemplate template = new RestTemplate();
+
+        ResponseEntity<String> response = template.getForEntity("http://localhost:9090/service-b/hello", String.class);
+
+        return "Service A called B and got response: " + response.getBody();
+    }
+
 
 }
