@@ -45,6 +45,19 @@ static_resources:
     - socket_address:
         address: zipkin
         port_value: 9411
+  - name: statsd
+    connect_timeout: 0.25s
+    type: strict_dns
+    lb_policy: ROUND_ROBIN
+    hosts:
+      - socket_address:
+          address: statsd
+          port_value: 9125
+
+stats_sinks:
+  - name: envoy.statsd
+    config:
+      tcp_cluster_name: statsd
 
 tracing:
   http:

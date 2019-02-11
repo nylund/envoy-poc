@@ -13,9 +13,7 @@ services:
     ports:
       - "8080:8080"
       - "9090:9090"
-      - "8001:8001"
     expose:
-      - "8080"
       - "9090"
     depends_on:
       - build-env
@@ -27,11 +25,7 @@ services:
   service-b:
     build:
       context: service-b
-    ports:
-      - "8081:8080"
-      - "9090:9090"
     expose:
-      - "8080"
       - "9090"
     depends_on:
       - build-env
@@ -52,6 +46,44 @@ services:
       envoymesh:
         aliases:
           - zipkin
+
+  statsd:
+    image: prom/statsd-exporter:latest
+    ports:
+    - "9125:9125"
+    - "9102:9102"
+    networks:
+      envoymesh:
+        aliases:
+          - statsd
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus-conf.yaml:/etc/prometheus.yaml
+    ports:
+    - "19090:9090"
+    expose:
+    - "9090"
+    command: "--config.file=/etc/prometheus.yaml"
+    networks:
+      envoymesh:
+        aliases:
+          - prometheus
+
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+      - ./grafana/dashboard.json:/etc/grafana/provisioning/dashboards/dashboard.json
+    ports:
+    - "3000:3000"
+    networks:
+      envoymesh:
+        aliases:
+          - grafana
 
 networks:
   envoymesh: {}
