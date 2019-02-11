@@ -1,1 +1,7 @@
 logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+
+spring.sleuth.enabled: true
+
+logging.level.org.springframework.web.client: DEBUG
+
+#server.port: 9999

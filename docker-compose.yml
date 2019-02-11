@@ -29,13 +29,29 @@ services:
       context: service-b
     ports:
       - "8081:8080"
+      - "9090:9090"
     expose:
       - "8080"
+      - "9090"
     depends_on:
       - build-env
     networks:
       envoymesh:
         aliases:
           - service-b
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    expose:
+      - "9411"
+    environment:
+      - STORAGE_TYPE=mem
+    networks:
+      envoymesh:
+        aliases:
+          - zipkin
+
 networks:
   envoymesh: {}
