@@ -1,7 +1,10 @@
 Envoy proof of concept
 
-Goals
-- Deploy two service with docker-compose. Both services have a envoy side car proxy container that traffic is proxied through.
+![overview](docs/overview.png)
+
+Goals of POC:
+- Deploy two service, A & B
+- Both services have a envoy side car proxy container that traffic is proxied through
 - Service A calls service B
 - Automated retries
 - Use circuit breakers, e.g. no cascading failures if B is down
@@ -10,7 +13,6 @@ Goals
 
 TODO
 - Both services protected with rate limiting
-
 
 ### Notes
 
